@@ -1,0 +1,21 @@
+variables:
+  - name: moduleVersion
+    description: Catalog Module version to use
+    type: string
+    default: "1.25.0"
+    order: 0
+
+  - name: exampleName
+    description: "Select one available example or select 'do_not_use_example' to get all available module variables"
+    type: enum
+    options:
+      - "do_not_use_example"
+      - "default"
+    default: "do_not_use_example"
+    order: 1
+
+partials:
+  - examples/{{ if eq .exampleName "do_not_use_example" }}default.hcl{{else}}{{ .exampleName }}.hcl{{end}}
+
+skip_files:
+  - not_path: terragrunt.hcl
