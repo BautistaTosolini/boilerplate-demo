@@ -33,10 +33,7 @@ inputs = {
   # name standarization, and make easy the example use.
   aws_region                = local.aws_region  
   principal_resource_name   = "${local.client_name}-${local.environment}"
-  # This variable is readed from the UI as it's defined in the
-  # boilerplate.yml file.
-  required_variable         = "{{ .required_variable }}"
-  
+
   # -------------------------------------
   # Do not touch anything below this line
   # -------------------------------------
