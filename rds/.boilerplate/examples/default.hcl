@@ -1,5 +1,5 @@
 {{- define "example_content" -}} 
-
+{{ "\n" }}
   environment                    = "dev"
   rds_identifier                 = "example"
   rds_engine                     = "mariadb"
