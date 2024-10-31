@@ -1,4 +1,5 @@
 {{- define "example_content" -}} 
+
   environment                    = "dev"
   rds_identifier                 = "example"
   rds_engine                     = "mariadb"
