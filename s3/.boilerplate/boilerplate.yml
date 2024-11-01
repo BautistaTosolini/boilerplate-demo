@@ -12,43 +12,15 @@ variables:
     options:
       - "do_not_use_example"
       - "default"
+      - "lifecycle_rules"
+      - "access_control_list"
     default: "do_not_use_example"
     order: 1
-
+  
   - name: bucket_name
-    description: "Name of the S3 Bucket"
+    description: "Name of the bucket"
     type: string
     order: 2
-
-  - name: force_destroy
-    description: "Deletes all objects when deleting the Bucket"
-    type: bool
-    default: false
-    order: 3
-  
-  - name: versioning
-    description: "Enables versioning"
-    type: bool
-    default: false
-    order: 4
-
-  - name: mfa_delete
-    description: "Enables MFA delete for change the versioning state of your bucket or permanently delete an object version"
-    type: bool
-    default: false
-    order: 5
-  
-  - name: allow_ssl_request_only
-    description: "Allow SSL requests only"
-    type: bool
-    default: true
-    order: 6
-
-  - name: block_public_access
-    description: "Block public access"
-    type: bool
-    default: true
-    order: 7
 
 # Do not change anything from here
 partials:

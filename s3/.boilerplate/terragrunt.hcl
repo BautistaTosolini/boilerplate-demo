@@ -31,15 +31,6 @@ inputs = {
   
   aws_region                = local.aws_region  
   principal_resource_name   = "${local.client_name}-${local.environment}"
-  bucket_list               = {
-    {{ .bucket_name }} = {
-      force_destroy          = {{ .force_destroy }}
-      versioning             = {{ .versioning }}
-      mfa_delete             = {{ .mfa_delete }}
-      allow_ssl_request_only = {{ .allow_ssl_request_only }}
-      block_public_access    = {{ .block_public_access }}
-    }
-  }
   
   # -------------------------------------
   # Do not touch anything below this line
