@@ -1,0 +1,66 @@
+locals {
+  # Automatically load account-level variables
+  account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
+  # Automatically load environment-level variables
+  region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+
+  # Extract out common variables for reuse
+  aws_region = local.region_vars.locals.aws_region
+  aws_account_id = local.account_vars.locals.aws_account_id
+  client_name = local.account_vars.locals.client_name
+  environment = local.env_vars.locals.environment
+}
+
+terraform {
+  source = "{{ .sourceUrl | replace "git::ssh://git@github.com/craftech-io/" "tfr://registry.craftech.io/craftech/" | replace "?ref=" (printf "?version=%s" .moduleVersion) }}"
+}
+
+# Include all settings from the root terragrunt.hcl file
+include {
+  path = find_in_parent_folders()
+}
+
+inputs = {
+  # --------------------------------------------------------------------------------------------------------------------
+  # Required input variables
+  #
+  # Add all required module variables here.
+  # As a convention try to use locals as much as you can.
+  # --------------------------------------------------------------------------------------------------------------------
+  
+  aws_region                = local.aws_region  
+  principal_resource_name   = "${local.client_name}-${local.environment}"
+  bucket_list               = {
+    {{ .bucket_name }} = {
+      force_destroy          = {{ .force_destroy }}
+      versioning             = {{ .versioning }}
+      mfa_delete             = {{ .mfa_delete }}
+      allow_ssl_request_only = {{ .allow_ssl_request_only }}
+      block_public_access    = {{ .block_public_access }}
+    }
+  }
+  
+  # -------------------------------------
+  # Do not touch anything below this line
+  # -------------------------------------
+
+  {{ if ne .exampleName "do_not_use_example" }}
+  # --------------------------------------------------------------------------------------------------------------------
+  # Variables defined by example:
+  # {{ .exampleName }} 
+  # --------------------------------------------------------------------------------------------------------------------
+  {{- template "example_content" . -}}
+  {{else}}
+
+  # --------------------------------------------------------------------------------------------------------------------
+  # Optional input variables
+  # Uncomment the ones you wish to set
+  # --------------------------------------------------------------------------------------------------------------------
+  {{ range .optionalVariables }}
+  # Description: {{ .Description }}
+  # Type: {{ .Type }}
+  # {{ .Name }} = {{ .DefaultValue }}
+  {{ end }}
+  {{ end }}
+}
