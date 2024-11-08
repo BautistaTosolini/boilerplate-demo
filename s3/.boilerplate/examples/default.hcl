@@ -1,7 +1,6 @@
 {{- define "example_content" -}} 
 {{ "\n" }}
   bucket_list = {
-      
     {{ .bucket_name }} = {
       force_destroy          = false
       versioning             = false

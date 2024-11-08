@@ -13,7 +13,7 @@ variables:
       - "do_not_use_example"
       - "default"
       - "lifecycle_rules"
-      - "access_control_list"
+      - "public_bucket"
     default: "do_not_use_example"
     order: 1
   
@@ -21,6 +21,14 @@ variables:
     description: "Name of the bucket"
     type: string
     order: 2
+
+  - name: number
+    description: "Enter a number if public_bucket is selected"
+    type: string
+    order: 3
+    required_if: 
+      variable: exampleName
+      value: "public_bucket"
 
 # Do not change anything from here
 partials:
