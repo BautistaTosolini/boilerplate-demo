@@ -21,11 +21,12 @@ variables:
     type: string
     order: 2
 
+      {{ if eq .exampleName "public_bucket" }}
   - name: number
     description: "Enter a number if public_bucket is selected"
     type: string
     order: 3
-    condition: "{{ eq .exampleName 'public_bucket' }}"
+      {{ end }}
 
 partials:
   - examples/{{ if eq .exampleName "do_not_use_example" }}default.hcl{{else}}{{ .exampleName }}.hcl{{end}}
