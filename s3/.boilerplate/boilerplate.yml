@@ -1,7 +1,6 @@
 variables:
-  # Change the default version to the last service catalog version.
   - name: moduleVersion
-    description: Catalog Module version to use
+    description: "Catalog Module version to use"
     type: string
     default: "1.25.0"
     order: 0
@@ -16,7 +15,7 @@ variables:
       - "public_bucket"
     default: "do_not_use_example"
     order: 1
-  
+
   - name: bucket_name
     description: "Name of the bucket"
     type: string
@@ -26,11 +25,8 @@ variables:
     description: "Enter a number if public_bucket is selected"
     type: string
     order: 3
-    required_if: 
-      variable: exampleName
-      value: "public_bucket"
+    condition: "{{ eq .exampleName 'public_bucket' }}"
 
-# Do not change anything from here
 partials:
   - examples/{{ if eq .exampleName "do_not_use_example" }}default.hcl{{else}}{{ .exampleName }}.hcl{{end}}
 
